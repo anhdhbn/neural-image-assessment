@@ -38,7 +38,8 @@ elif args.img[0] is not None:
 else:
     raise RuntimeError('Either -dir or -img arguments must be passed as argument')
 
-with tf.device('/CPU:0'):
+# with tf.device('/CPU:0'):
+if True:
     base_model = NASNetMobile((224, 224, 3), include_top=False, pooling='avg', weights=None)
     x = Dropout(0.75)(base_model.output)
     x = Dense(10, activation='softmax')(x)
