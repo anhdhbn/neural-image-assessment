@@ -1,6 +1,7 @@
 import numpy as np
 import argparse
 from path import Path
+# from os import Path
 
 from keras.models import Model
 from keras.layers import Dense, Dropout
@@ -43,7 +44,7 @@ elif args.img[0] is not None:
 else:
     raise RuntimeError('Either -dir or -img arguments must be passed as argument')
 
-with tf.device('/CPU:0'):
+# with tf.device('/CPU:0'):
     base_model = InceptionResNetV2(input_shape=(None, None, 3), include_top=False, pooling='avg', weights=None)
     x = Dropout(0.75)(base_model.output)
     x = Dense(10, activation='softmax')(x)
