@@ -64,7 +64,7 @@ if True:
     fig = plt.figure()
     plt.subplots(int(len(imgs)/3) + 1 , 3, figsize = (15,12))
     for img_path in imgs:
-        i = i  + 1 
+        
         img = load_img(img_path, target_size=target_size)
         x = img_to_array(img)
         x = np.expand_dims(x, axis=0)
@@ -85,10 +85,11 @@ if True:
         img = cv2.imread(img_path)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
         
-        ax = fig.add_subplot(100 + i) 
+        ax = fig.add_subplot(i) 
         ax.set_title("NIMA Score : %0.3f +- (%0.3f)" % (mean, std))
         # plt.subplots(2, 3, figsize = (15,12))
         plt.imshow(img)
+        i = i  + 1 
     
 
     if rank_images:
