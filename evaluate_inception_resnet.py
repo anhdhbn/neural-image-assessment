@@ -92,12 +92,13 @@ if True:
         plt.imshow(img)
         
     
-
+    plt.show()
+    
     if rank_images:
         print("*" * 40, "Ranking Images", "*" * 40)
         score_list = sorted(score_list, key=lambda x: x[1], reverse=True)
 
         for i, (name, score) in enumerate(score_list):
             print("%d)" % (i + 1), "%s : Score = %0.5f" % (name, score))
-    plt.show()
+    
 
