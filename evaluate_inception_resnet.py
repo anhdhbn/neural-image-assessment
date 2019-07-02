@@ -13,7 +13,8 @@ import tensorflow as tf
 from IPython.display import Image
 import matplotlib.pyplot as plt
 import cv2
-
+import matplotlib.image as mpimg
+%matplotlib inline
 
 
 from utils.score_utils import mean_score, std_score
@@ -60,12 +61,16 @@ if True:
     model.load_weights('weights/inception_resnet_weights.h5')
 
     score_list = []
-    i = 0
+
     fig = plt.figure()
     ncols = int(len(imgs)/3) + 1 
-    plt.subplots(ncols, 3, figsize = (15,12))
-    for img_path in imgs:
-        i = i  + 1 
+    # plt.subplots(ncols, 3, figsize = (15,12))
+    fig,axes=plt.subplots(ncols=ncols, nrows = 3, figsize = (15,12))
+    rows = 3
+    for idx, img_path in enumerate(imgs):
+        i = idx % 3 # Get subplot row
+        j = idx // 3 # Get subplot column
+
         img = load_img(img_path, target_size=target_size)
         x = img_to_array(img)
         x = np.expand_dims(x, axis=0)
@@ -83,17 +88,23 @@ if True:
         print("Evaluating : ", img_path)
         print("NIMA Score : %0.3f +- (%0.3f)" % (mean, std))
         print()
-        img = cv2.imread(img_path)
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        
-        ax = fig.add_subplot(ncols * 100 + 30 + i) 
-        ax.set_title("NIMA Score : %0.3f +- (%0.3f)" % (mean, std))
-        # plt.subplots(2, 3, figsize = (15,12))
+
+        plt.subplot(rows,3,idx+1)
+        plt.title("NIMA Score : %0.3f +- (%0.3f)" % (mean, std))
+        plt.axis('off')
         plt.imshow(img)
+        # img = cv2.imread(img_path)
+        # img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        # iar_shp = img.shape
+
+        # axes[i] = fig.add_subplot(ncols * 100 + 30 + i) 
+        # ax.set_title("NIMA Score : %0.3f +- (%0.3f)" % (mean, std))
+        # # plt.subplots(2, 3, figsize = (15,12))
+        # plt.imshow(img)
         
     
     plt.show()
-    
+
     if rank_images:
         print("*" * 40, "Ranking Images", "*" * 40)
         score_list = sorted(score_list, key=lambda x: x[1], reverse=True)
