@@ -10,6 +10,12 @@ from keras.applications.inception_resnet_v2 import preprocess_input
 from keras.preprocessing.image import load_img, img_to_array
 import tensorflow as tf
 
+from IPython.display import Image
+import matplotlib.pyplot as plt
+import cv2
+
+
+
 from utils.score_utils import mean_score, std_score
 
 parser = argparse.ArgumentParser(description='Evaluate NIMA(Inception ResNet v2)')
@@ -54,8 +60,10 @@ if True:
     model.load_weights('weights/inception_resnet_weights.h5')
 
     score_list = []
-
+    i = 0
+    fig = plt.figure()
     for img_path in imgs:
+        i = i  + 1 
         img = load_img(img_path, target_size=target_size)
         x = img_to_array(img)
         x = np.expand_dims(x, axis=0)
@@ -73,6 +81,12 @@ if True:
         print("Evaluating : ", img_path)
         print("NIMA Score : %0.3f +- (%0.3f)" % (mean, std))
         print()
+        img = cv2.cvtColor(img1, cv2.COLOR_BGR2RGB)
+        ax = fig.add_subplot(100 + i) 
+        ax.set_title("NIMA Score : %0.3f +- (%0.3f)" % (mean, std))
+        # plt.subplots(2, 3, figsize = (15,12))
+        plt.imshow(img)
+    plt.show()
 
     if rank_images:
         print("*" * 40, "Ranking Images", "*" * 40)
