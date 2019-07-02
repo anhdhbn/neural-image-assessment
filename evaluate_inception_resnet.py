@@ -83,11 +83,12 @@ if True:
         print()
         img = cv2.imread(img_path)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+        plt.subplots(int(len(imgs)/3) + 1 , 3, figsize = (15,12))
         ax = fig.add_subplot(100 + i) 
         ax.set_title("NIMA Score : %0.3f +- (%0.3f)" % (mean, std))
         # plt.subplots(2, 3, figsize = (15,12))
         plt.imshow(img)
-    plt.show()
+    
 
     if rank_images:
         print("*" * 40, "Ranking Images", "*" * 40)
@@ -95,5 +96,5 @@ if True:
 
         for i, (name, score) in enumerate(score_list):
             print("%d)" % (i + 1), "%s : Score = %0.5f" % (name, score))
-
+    plt.show()
 
