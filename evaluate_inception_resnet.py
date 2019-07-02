@@ -14,7 +14,8 @@ from IPython.display import Image
 import matplotlib.pyplot as plt
 import cv2
 import matplotlib.image as mpimg
-%matplotlib inline
+
+# %matplotlib inline
 
 
 from utils.score_utils import mean_score, std_score
